@@ -35,6 +35,13 @@ export default function Board({
       };
     });
   };
+
+  const handleRemoveTask = (taskId: string) => {
+    setBoard((prev) => ({
+      ...prev,
+      [column]: prev[column].filter((t) => t.id !== taskId),
+    }));
+  };
   return (
     <div
       className="w-full max-w-[60vh] rounded-sm border dark:border-zinc-900"
@@ -64,7 +71,12 @@ export default function Board({
 
       <div className="scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent dark:scrollbar-thumb-zinc-700 mt-6 flex h-[48vh] min-h-[50vh] flex-col gap-4 overflow-y-auto px-4 py-2">
         {tasks.map((task) => (
-          <TaskBox task={task} column={column} />
+          <TaskBox
+            key={task.id}
+            task={task}
+            column={column}
+            onRemove={handleRemoveTask}
+          />
         ))}
       </div>
     </div>

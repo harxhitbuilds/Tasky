@@ -1,6 +1,7 @@
 import { IconPlus } from "@tabler/icons-react";
 import { v4 as uuidv4 } from "uuid";
 
+import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import {
@@ -40,9 +41,12 @@ export function TaskAddDialog({
     formState: { errors },
   } = useForm<Inputs>();
 
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const today = new Date();
     const time = today.toLocaleTimeString();
+
     setBoard((prev) => ({
       ...prev,
       [column]: [
@@ -56,6 +60,7 @@ export function TaskAddDialog({
       ],
     }));
     reset();
+    closeRef.current?.click();
   };
 
   return (
@@ -64,7 +69,7 @@ export function TaskAddDialog({
         <IconPlus size={20} />
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <DialogHeader>
             <DialogTitle>Add Task</DialogTitle>
             <DialogDescription>
@@ -85,7 +90,7 @@ export function TaskAddDialog({
           </FieldGroup>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline" type="button">
+              <Button ref={closeRef} variant="outline" type="button">
                 Cancel
               </Button>
             </DialogClose>
