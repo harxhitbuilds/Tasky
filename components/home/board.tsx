@@ -1,3 +1,4 @@
+import { useDroppable } from "@dnd-kit/core";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +21,7 @@ export default function Board({
   setBoard: React.Dispatch<React.SetStateAction<BoardState>>;
   accent: string;
 }) {
+  const { setNodeRef } = useDroppable({ id: column });
   const handleDrop = (e: React.DragEvent) => {
     const taskId = e.dataTransfer.getData("text/plain");
     const fromColumn = e.dataTransfer.getData("fromColumn") as ColumnType;
@@ -44,9 +46,10 @@ export default function Board({
   };
   return (
     <div
-      className="w-full max-w-[60vh] rounded-sm border dark:border-zinc-900"
+      className="w-full max-w-[60vh] min-w-75 rounded-sm border dark:border-zinc-900"
       onDragOver={(e) => e.preventDefault()}
       onDrop={handleDrop}
+      ref={setNodeRef}
     >
       <div className="mt-4 flex items-center justify-between px-4">
         <p
@@ -58,7 +61,7 @@ export default function Board({
             accent === "failed" && "bg-failed/10 text-failed",
           )}
         >
-          {title}
+          {title} <span></span>
         </p>
         {column === "today" && (
           <TaskAddDialog setBoard={setBoard} column={column} />

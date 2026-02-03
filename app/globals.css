@@ -41,6 +41,9 @@
   --ongoing: oklch(0.75 0.14 255);
   --completed: oklch(0.78 0.16 145);
   --failed: oklch(0.7 0.18 25);
+  --toast-bg: #ffffff;
+  --toast-text: #09090b;
+  --toast-border: #e4e4e7;
 }
 
 .dark {
@@ -75,6 +78,9 @@
   --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+  --toast-bg: #09090b;
+  --toast-text: #fafafa;
+  --toast-border: #27272a;
 }
 
 @theme inline {

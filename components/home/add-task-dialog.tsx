@@ -1,7 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { IconPlus } from "@tabler/icons-react";
 import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
 
-import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import {
@@ -22,6 +23,14 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
+const taskSchema = z.object({
+  title: z.string().min(1, "Title is required").max(40, "Max length is 20"),
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(150, "Max length is 40"),
+});
+
 type Inputs = {
   title: string;
   description: string;
@@ -39,9 +48,9 @@ export function TaskAddDialog({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>();
-
-  const closeRef = useRef<HTMLButtonElement>(null);
+  } = useForm<Inputs>({
+    resolver: zodResolver(taskSchema),
+  });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const today = new Date();
@@ -60,7 +69,6 @@ export function TaskAddDialog({
       ],
     }));
     reset();
-    closeRef.current?.click();
   };
 
   return (
@@ -80,17 +88,27 @@ export function TaskAddDialog({
             <Field>
               <Label htmlFor="name-1">Task</Label>
               <Input id="name-1" {...register("title")} />
+              {errors.title && (
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.title.message}
+                </p>
+              )}
             </Field>
           </FieldGroup>
           <FieldGroup>
             <Field>
               <Label htmlFor="description">Description</Label>
               <Textarea id="description" {...register("description")} />
+              {errors.description && (
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.description.message}
+                </p>
+              )}
             </Field>
           </FieldGroup>
           <DialogFooter>
             <DialogClose asChild>
-              <Button ref={closeRef} variant="outline" type="button">
+              <Button variant="outline" type="button">
                 Cancel
               </Button>
             </DialogClose>

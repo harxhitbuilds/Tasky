@@ -1,3 +1,4 @@
+import { useDraggable } from "@dnd-kit/core";
 import { Trash } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -9,12 +10,19 @@ export default function TaskBox({
   onRemove,
 }: {
   task: Task;
-  column: ColumnType;
+  column: ColumnType | null;
   onRemove?: (taskId: string) => void;
 }) {
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id: task.id,
+    data: { fromColumn: column },
+  });
   return (
     <motion.div
       key={task.id}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
       className="w-full cursor-grab space-y-4 rounded-sm border border-zinc-200 bg-zinc-200/60 py-3 pt-3 dark:border-zinc-800 dark:bg-zinc-900/60"
       draggable
       whileHover={{ scale: 1.03 }}

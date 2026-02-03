@@ -1,4 +1,5 @@
 import Navbar from "@/components/navigations/navbar";
+import { SnapshotModeProvider } from "@/providers/snapshot-provider";
 
 export default function HomeLayout({
   children,
@@ -7,8 +8,7 @@ export default function HomeLayout({
 }) {
   return (
     <>
-      <Navbar />
-      {children}
+      <SnapshotModeProvider>{children}</SnapshotModeProvider>
     </>
   );
 }

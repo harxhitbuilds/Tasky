@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
+import { Toaster } from "sonner";
 
 import ThemeProvider from "@/providers/theme-provider";
 
@@ -23,19 +24,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${grotesk.variable} bg-background text-foreground antialiased`}
       >
-        <body
-          className={`${grotesk.variable} bg-background text-foreground antialiased`}
-        >
-          {children}
-        </body>
-      </ThemeProvider>
+        {" "}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <main>{children}</main>
+        </ThemeProvider>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 1000,
+            style: {
+              background: "var(--toast-bg)",
+              color: "var(--toast-text)",
+              border: "1px solid var(--toast-border)",
+              fontFamily: "Inter, sans-serif",
+              fontSize: "0.875rem",
+              padding: "12px 16px",
+            },
+          }}
+        />
+      </body>
     </html>
   );
 }

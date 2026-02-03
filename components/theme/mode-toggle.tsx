@@ -47,6 +47,9 @@ export default function ModeToggle() {
         initial={{ rotate: 0, opacity: 0 }}
         animate={{ rotate: 180, opacity: 1 }}
         exit={{ rotate: 0, opacity: 0 }}
+        whileHover={{
+          scale: 1.2,
+        }}
         transition={{ duration: 0.4 }}
         className="flex cursor-pointer"
       >
