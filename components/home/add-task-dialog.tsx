@@ -38,8 +38,8 @@ const taskSchema = z.object({
     .string()
     .min(1, "Description is required")
     .max(150, "Max length is 150"),
-  priority: z.enum(["high", "medium", "low"], {
-    required_error: "Priority is required",
+  priority: z.enum(["high", "medium", "low"] as const, {
+    error: "Priority is required",
   }),
 });
 
