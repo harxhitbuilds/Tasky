@@ -46,7 +46,17 @@ export default function Board({
   };
   return (
     <div
-      className="w-full max-w-[60vh] min-w-75 rounded-sm border dark:border-zinc-900"
+      className={cn(
+        "relative z-10 w-full max-w-[60vh] min-w-75 rounded-sm border bg-white transition-colors duration-200 ease-in-out dark:border-zinc-900 dark:bg-zinc-950",
+        accent === "today" &&
+          "hover:border-today/40 dark:hover:border-today/20",
+        accent === "ongoing" &&
+          "hover:border-ongoing/40 dark:hover:border-ongoing/20",
+        accent === "completed" &&
+          "hover:border-completed/40 dark:hover:border-completed/20",
+        accent === "failed" &&
+          "hover:border-failed/40 dark:hover:border-failed/20",
+      )}
       onDragOver={(e) => e.preventDefault()}
       onDrop={handleDrop}
       ref={setNodeRef}

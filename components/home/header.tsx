@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { homepageConfig } from "@/config/home";
+import { useSnapshotMode } from "@/providers/snapshot-provider";
 
 import AnimatedText from "../global/animated-text";
 import { Badge } from "../ui/badge";
@@ -48,6 +49,8 @@ export default function Header() {
   const weekday = todayParts[0];
   const rest = todayParts.slice(1).join(", ");
 
+  const { snapshotMode } = useSnapshotMode();
+
   const [motivationLine, setMotivationLine] = useState(
     homepageConfig.motivationLine,
   );
@@ -59,24 +62,28 @@ export default function Header() {
 
   return (
     <div className="flex flex-col gap-3 px-4 lg:px-0">
-      <Badge className="bg-accent/10 text-accent relative rounded-xs border border-zinc-200 after:w-full dark:border-zinc-800">
-        <AnimatedText>{homepageConfig.tagLine}</AnimatedText>
-        <div className="via-accent absolute bottom-0 h-px w-full bg-linear-to-r from-transparent to-transparent"></div>
-      </Badge>
-      <AnimatedText className="text-4xl font-semibold">
+      {!snapshotMode && (
+        <Badge className="bg-accent/10 text-accent relative rounded-xs border border-zinc-200 after:w-full dark:border-zinc-800">
+          <AnimatedText>{homepageConfig.tagLine}</AnimatedText>
+          <div className="via-accent absolute bottom-0 h-px w-full bg-linear-to-r from-transparent to-transparent"></div>
+        </Badge>
+      )}
+      <AnimatedText className="font-grotesk text-4xl font-bold">
         <span className="text-accent">{weekday}</span>
         {`, ${rest}`}
       </AnimatedText>
       <div className="relative inline-block max-w-xl align-bottom">
-        <AnimatedText className="text-muted-foreground">
+        <AnimatedText className="text-muted-foreground font-grotesk">
           {motivationLine}
         </AnimatedText>
-        <div className="absolute right-0 bottom-0">
-          <MotivationLineDialog
-            motivationLine={motivationLine}
-            setMotivationLine={setMotivationLine}
-          />
-        </div>
+        {!snapshotMode && (
+          <div className="absolute right-0 bottom-0 cursor-pointer">
+            <MotivationLineDialog
+              motivationLine={motivationLine}
+              setMotivationLine={setMotivationLine}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

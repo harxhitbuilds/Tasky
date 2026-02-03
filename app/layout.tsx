@@ -1,5 +1,6 @@
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { Toaster } from "sonner";
 
 import ThemeProvider from "@/providers/theme-provider";
@@ -12,10 +13,46 @@ const grotesk = Space_Grotesk({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Tasky : Share your goals completion with others.",
   description:
-    "Tasky is an task management platform in which you can manage your tasks without creating account. Also can share you day to day tasks completion with others.",
+    "Tasky is an local storage based task management platform in which you can manage your tasks without creating account. Also can share you day to day tasks completion with others.",
+  openGraph: {
+    title: "Tasky - Share your goals completion with others.",
+    description:
+      "Tasky is an task management platform in which you can manage your tasks without creating account. Also can share you day to day tasks completion with others.",
+    url: "https://tasky.harshitparmar.in",
+    siteName: "Tasky",
+    images: [
+      {
+        url: "https://tasky.harshitparmar.in/og/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Tasky",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tasky - Share your goals completion with others.",
+    description:
+      "Tasky is an task management platform in which you can manage your tasks without creating account. Also can share you day to day tasks completion with others.",
+    images: ["https://tasky.harshitparmar.in/og/og.png"],
+    creator: "@harxhitbuilds",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -26,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${grotesk.variable} bg-background text-foreground antialiased`}
+        className={`${grotesk.variable} ${inter.variable} bg-background text-foreground antialiased`}
       >
         {" "}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -46,6 +83,7 @@ export default function RootLayout({
             },
           }}
         />
+        <Analytics />
       </body>
     </html>
   );

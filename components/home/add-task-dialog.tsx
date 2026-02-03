@@ -3,6 +3,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
+import { Controller } from "react-hook-form";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import {
@@ -16,6 +17,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { BoardState, ColumnType, Task } from "@/types/task";
 
 import { Button } from "../ui/button";
@@ -24,17 +33,17 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
 const taskSchema = z.object({
-  title: z.string().min(1, "Title is required").max(40, "Max length is 20"),
+  title: z.string().min(1, "Title is required").max(40, "Max length is 40"),
   description: z
     .string()
     .min(1, "Description is required")
-    .max(150, "Max length is 40"),
+    .max(150, "Max length is 150"),
+  priority: z.enum(["high", "medium", "low"], {
+    required_error: "Priority is required",
+  }),
 });
 
-type Inputs = {
-  title: string;
-  description: string;
-};
+type Inputs = z.infer<typeof taskSchema>;
 
 export function TaskAddDialog({
   setBoard,
@@ -47,14 +56,14 @@ export function TaskAddDialog({
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(taskSchema),
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const today = new Date();
-    const time = today.toLocaleTimeString();
+    const now = new Date().toISOString();
 
     setBoard((prev) => ({
       ...prev,
@@ -63,7 +72,8 @@ export function TaskAddDialog({
           id: uuidv4(),
           title: data.title,
           description: data.description,
-          createdAt: time,
+          priority: data.priority,
+          createdAt: now,
         },
         ...prev[column],
       ],
@@ -102,6 +112,39 @@ export function TaskAddDialog({
               {errors.description && (
                 <p className="mt-1 text-xs text-red-500">
                   {errors.description.message}
+                </p>
+              )}
+            </Field>
+          </FieldGroup>
+          <FieldGroup>
+            <Field>
+              <Label>Priority</Label>
+              <Controller
+                name="priority"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="bg-background border-input text-foreground">
+                      <SelectValue placeholder="Priority" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-input text-foreground border">
+                      <SelectGroup>
+                        <SelectItem
+                          className="dark:hover:bg-input hover:bg-input"
+                          value="high"
+                        >
+                          High
+                        </SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="low">Low</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.priority && (
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.priority.message}
                 </p>
               )}
             </Field>

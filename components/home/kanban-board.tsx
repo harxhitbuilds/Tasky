@@ -31,21 +31,46 @@ export default function KanbanBoard() {
   const [activeColumn, setactiveColumn] = useState<ColumnType | null>(null);
 
   useEffect(() => {
-    const boards = localStorage.getItem("kanban-board");
-    if (boards) {
-      setBoard(JSON.parse(boards));
+    const savedDate = localStorage.getItem("kanban-board-date");
+    const today = new Date().toISOString().slice(0, 10);
+
+    if (savedDate !== today) {
+      setBoard({
+        today: [],
+        ongoing: [],
+        completed: [],
+        failed: [],
+      });
+      localStorage.setItem("kanban-board-date", today);
+      localStorage.setItem(
+        "kanban-board",
+        JSON.stringify({
+          today: [],
+          ongoing: [],
+          completed: [],
+          failed: [],
+        }),
+      );
+    } else {
+      const boards = localStorage.getItem("kanban-board");
+      if (boards) {
+        setBoard(JSON.parse(boards));
+      }
     }
+
     const timeout = setTimeout(() => setloading(false), 500);
     return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
     localStorage.setItem("kanban-board", JSON.stringify(board));
+    localStorage.setItem("kanban-board-date", today);
   }, [board]);
 
   if (loading) {
     return (
-      <div className="mt-6 flex flex-row gap-4 overflow-x-auto px-4 md:grid md:grid-cols-4 md:overflow-x-visible">
+      <div className="mt-6 flex flex-row gap-4 overflow-x-auto md:grid md:grid-cols-4 md:overflow-x-visible">
         {[...Array(4)].map((_, i) => (
           <BoardSkeleton key={i} />
         ))}
