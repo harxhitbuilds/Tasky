@@ -32,10 +32,15 @@ export default function TaskBox({
       draggable
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
-      onDragStart={(e: React.DragEvent<HTMLDivElement>) => {
-        e.dataTransfer.setData("text/plain", task.id);
-        e.dataTransfer.setData("fromColumn", column);
-      }}
+      onDragStart={
+        ((e: React.DragEvent<HTMLDivElement>) => {
+          e.dataTransfer.setData("text/plain", task.id);
+          e.dataTransfer.setData("fromColumn", String(column));
+        }) as unknown as (
+          event: MouseEvent | TouchEvent | PointerEvent,
+          info: any,
+        ) => void
+      }
     >
       <div className="space-y-2 px-3">
         <h2 className="text-sm">{task.title}</h2>
