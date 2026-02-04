@@ -22,21 +22,6 @@ export default function Board({
   accent: string;
 }) {
   const { setNodeRef } = useDroppable({ id: column });
-  const handleDrop = (e: React.DragEvent) => {
-    const taskId = e.dataTransfer.getData("text/plain");
-    const fromColumn = e.dataTransfer.getData("fromColumn") as ColumnType;
-    if (!taskId || fromColumn === column) return;
-
-    setBoard((prev) => {
-      const task = prev[fromColumn].find((t) => t.id === taskId);
-      if (!task) return prev;
-      return {
-        ...prev,
-        [fromColumn]: prev[fromColumn].filter((t) => t.id !== taskId),
-        [column]: [task, ...prev[column]],
-      };
-    });
-  };
 
   const handleRemoveTask = (taskId: string) => {
     setBoard((prev) => ({
@@ -57,8 +42,6 @@ export default function Board({
         accent === "failed" &&
           "hover:border-failed/40 dark:hover:border-failed/20",
       )}
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={handleDrop}
       ref={setNodeRef}
     >
       <div className="mt-4 flex items-center justify-between px-4">
