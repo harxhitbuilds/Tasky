@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tasky ✨
+
+<p align="center">
+  <img src="./public/screenshots/board.png" alt="Tasky Kanban Board Screenshot" width="800"/>
+</p>
+
+A modern, responsive, and beautiful Kanban board built with [Next.js](https://nextjs.org), [dnd-kit](https://dndkit.com/), and Tailwind CSS.  
+Organize your tasks, boost productivity, and share your progress with stunning snapshot mode!
+
+---
+
+## Features
+
+- **Drag & Drop:** Move tasks between columns with smooth, mobile-friendly drag-and-drop powered by dnd-kit.
+- **Snapshot Mode:** Hide distractions and take a clean screenshot of your board to share on social media.
+- **Task Priorities:** Set task priority (High, Medium, Low) and see it at a glance.
+- **Auto-Reset:** Tasks reset automatically each day for fresh productivity.
+- **Responsive Design:** Works beautifully on desktop and mobile.
+- **Dark Mode:** Toggle between light and dark themes.
+- **Social Sharing:** Share your board or app with built-in share buttons.
+- **Gradient Accents:** Eye-catching gradient borders and accent colors for each column.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/yourusername/tasky-kanban-board.git
+cd tasky-kanban-board
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+- **Next.js** – App Router, SEO, and performance
+- **dnd-kit** – Drag-and-drop for desktop & mobile
+- **Tailwind CSS** – Utility-first styling
+- **Motion React** – Animations
+- **Vercel Analytics** – Real-time analytics
+- **date-fns** – Relative time formatting
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pull requests and feedback are welcome!  
+Please open an issue for bugs or feature requests.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 💬 Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [GitHub](https://github.com/harxhitbuilds/Tasky)
+- [Twitter](https://x.com/harxhitbuilds)
+
+---
+
+> _Built with ❤️ by harxhitbuilds_
